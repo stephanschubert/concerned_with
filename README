@@ -1,0 +1,76 @@
+= ConcernedWith, an ActiveRecord extension
+
+ConcernedWith allows you to split up a model's several concerns into
+separate files to keep your code clear and modularized.
+
+This version is a bit more sophisticated as it uses the include-mechanism
+instead of re-opening the model's class. It required a bit more setup
+but provides more flexibility on the other hand.
+
+Inspired by Rick Olson's original code.
+
+
+== How to use
+
+# app/models/user.rb
+
+class User < ActiveRecord::Base
+  concerned_with :authentication, :validations
+end
+
+
+# app/models/user/authentication.rb
+
+module User::Authentication
+
+  def self.included(base)
+    base.extend ClassMethods
+  end
+
+  module ClassMethods
+  
+    def authenticate(name, password)
+      ...
+    end
+
+  end
+
+end
+
+
+# app/models/user/validations.rb
+
+module User::Validations
+
+  def self.included(base)
+    base.validates_presence_of :name, :email
+  end
+
+end
+
+
+== Template code for your convenience
+
+module Model::Concern
+
+  def self.included(base)
+    base.extend ClassMethods
+    base.send :include, InstanceMethods
+
+    # You can use base.alias_method_chain and other cool things here!
+    ...
+  end
+
+  module ClassMethods
+    ...
+  end
+
+  module InstanceMethods
+    ...
+  end
+
+end
+
+
+
+Copyright (c) 2009 Stephan Schubert, released under the MIT license
