@@ -1,0 +1,6 @@
+# OSX specific
+.DS_Store
+
+# Emacs' backups
+*#*#
+*~  
