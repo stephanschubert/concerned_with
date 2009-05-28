@@ -7,7 +7,7 @@ module ActiveRecord
 
     module ClassMethods
 
-      def concerned_with *concerns
+      def concerned_with(*concerns)
         concerns.each { |concern|
           require_dependency "#{name.downcase}/#{concern}"
           include "#{name}::#{concern.to_s.camelize}".constantize
