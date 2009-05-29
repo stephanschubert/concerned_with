@@ -10,6 +10,13 @@ but provides more flexibility on the other hand.
 Inspired by Rick Olson's original code.
 
 
+== Installation
+
+In your application root do:
+
+$ git submodule add git://github.com/jazen/concerned_with.git vendor/plugins/concerned_with
+
+
 == How to use
 
 # app/models/user.rb
